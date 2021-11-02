@@ -21,6 +21,7 @@
                             <div class="overflow-hidden bg-blue-50 rounded max-w-xs w-full shadow-lg  leading-normal">
                                 <p class="font-bold text-lg mb-1 text-black group-hover:text-white m-2">{{ $task->title }}</p>
                                 <p class="text-grey-darker mb-2 group-hover:text-white m-2">{{ $task->content }}</p>
+                                <p class="font-bold text-sm mb-1 text-gray-600 group-hover:text-white m-2">{{ $task->status }}</p>
                             </div>
 
                             <div class="buttons flex">

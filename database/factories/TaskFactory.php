@@ -16,6 +16,7 @@ class TaskFactory extends Factory
         return [
             'title' => $this->faker->title(),
             'content' => $this->faker->sentence(),
+            'status' => $this->faker->text()
         ];
     }
 }
