@@ -16,7 +16,7 @@
     <div class="buttons flex mt-5">
         <button>
             <div class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">
-                {{ $task === null ? "Create" : "Save" }}
+                {{ $task->exists ? "Save" : "Create" }}
             </div>
         </button>
     </div>

@@ -12,6 +12,7 @@
 
                     <form method="post" action="{{ route('tasks.store') }}">
                         @csrf
+                        @method('POST')
                         @include('tasks._form', ['task' => new App\Models\Task])
                     </form>
 

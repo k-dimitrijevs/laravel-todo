@@ -34,7 +34,6 @@
                                         <button type="submit" onclick="confirm('Are you sure you want to delete?')">Delete</button>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     @endforeach
