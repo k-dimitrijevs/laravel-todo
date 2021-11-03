@@ -11,7 +11,7 @@ class TasksController extends Controller
 {
     public function index()
     {
-        return view('tasks.index', ['tasks' => Task::all()]);
+        return view('tasks.index', ['tasks' => auth()->user()->tasks()->get()]);
     }
 
     public function create()
@@ -21,10 +21,12 @@ class TasksController extends Controller
 
     public function store(TasksRequest $request): RedirectResponse
     {
-        (new Task([
+        $task = (new Task([
             'title' => $request->get('title'),
             'content' => $request->get('content'),
-        ]))->save();
+        ]));
+        $task->user()->associate(auth()->user());
+        $task->save();
 
         return redirect()->route('tasks.index');
     }

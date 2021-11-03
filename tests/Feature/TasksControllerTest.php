@@ -40,12 +40,13 @@ class TasksControllerTest extends TestCase
 
     public function test_adding_new_task(): void
     {
-        /** @var Authenticatable $user */
-        $user = User::factory()->make();
+        /** @var User $user */
+        $user = User::factory()->create();
         $this->actingAs($user);
 
-        $task = Task::factory()->create();
-
+        $task = Task::factory()->create([
+            'user_id' => $user->id,
+        ]);
         $this->followingRedirects();
         $response = $this->post(route('tasks.store'), ['task' => $task]);
         $response->assertStatus(200);
@@ -53,12 +54,13 @@ class TasksControllerTest extends TestCase
 
     public function test_visit_tasks_edit_page(): void
     {
-        /** @var Authenticatable $user */
-        $user = User::factory()->make();
+        /** @var User $user */
+        $user = User::factory()->create();
         $this->actingAs($user);
 
-        $task = Task::factory()->create();
-
+        $task = Task::factory()->create([
+            'user_id' => $user->id,
+        ]);
         $response = $this->get(route('tasks.edit', ['task' => $task]));
         $response->assertStatus(200);
         $response->assertViewIs('tasks.edit');
@@ -67,11 +69,13 @@ class TasksControllerTest extends TestCase
     // edit task test - post
     public function test_updating_task(): void
     {
-        /** @var Authenticatable $user */
-        $user = User::factory()->make();
+        /** @var User $user */
+        $user = User::factory()->create();
         $this->actingAs($user);
 
-        $task = Task::factory()->create();
+        $task = Task::factory()->create([
+            'user_id' => $user->id,
+        ]);
 
         $this->followingRedirects();
         $response = $this->put(route('tasks.update', ['task' => $task]));
@@ -81,12 +85,13 @@ class TasksControllerTest extends TestCase
     // delete task - delete
     public function test_deleting_task(): void
     {
-        /** @var Authenticatable $user */
-        $user = User::factory()->make();
+        /** @var User $user */
+        $user = User::factory()->create();
         $this->actingAs($user);
 
-        $task = Task::factory()->create();
-
+        $task = Task::factory()->create([
+            'user_id' => $user->id,
+        ]);
         $this->followingRedirects();
         $response = $this->delete(route('tasks.destroy', ['task' => $task]));
         $response->assertStatus(200);
@@ -94,11 +99,13 @@ class TasksControllerTest extends TestCase
 
     public function test_mark_task_as_completed(): void
     {
-        /** @var Authenticatable $user */
-        $user = User::factory()->make();
+        /** @var User $user */
+        $user = User::factory()->create();
         $this->actingAs($user);
 
-        $task = Task::factory()->create();
+        $task = Task::factory()->create([
+            'user_id' => $user->id,
+        ]);
 
         $this->followingRedirects();
         $response = $this->post(route('tasks.complete', $task));

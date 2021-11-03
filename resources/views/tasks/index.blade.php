@@ -33,14 +33,17 @@
 
                             <div class="overflow-hidden bg-blue-50 rounded max-w-xs w-full shadow-lg  leading-normal">
                                 @if($task->completed_at)
-                                    <s>
                                     <div class="bg-green-400 shadow-lg leading-normal overflow-hidden">
+                                    <s>
                                 @endif
                                     <p class="font-bold text-lg mb-1 text-black group-hover:text-white m-2">{{ $task->title }}</p>
                                     <p class="text-grey-darker mb-2 group-hover:text-white m-2">{{ $task->content }}</p>
                                 @if($task->completed_at)
-                                    </div>
                                     </s>
+                                        @if($task->completed_at)
+                                            <p class="font-bold text-sm">Completed: {{$task->completed_at}}</p>
+                                        @endif
+                                    </div>
                                 @endif
                             </div>
 
