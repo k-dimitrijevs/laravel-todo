@@ -24,6 +24,7 @@
                                     <div class="btn p-1 px-4 font-semibold cursor-pointer mr-4">
                                         <input type="checkbox"
                                                id="status"
+                                               class="text-green-500 w-6 h-6 rounded-2xl"
                                                name="status"
                                                onchange="this.form.submit()"
                                                @if($task->completed_at) checked @endif>

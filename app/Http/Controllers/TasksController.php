@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TasksRequest;
 use App\Models\Task;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,12 @@ class TasksController extends Controller
 {
     public function index()
     {
-        return view('tasks.index', ['tasks' => auth()->user()->tasks()->get()]);
+        $tasks = Task::where('user_id', auth()->user()->id)
+            ->orderBy('completed_at', 'ASC')
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
+        return view('tasks.index', ['tasks' => $tasks]);
     }
 
     public function create()
