@@ -13,13 +13,6 @@
     <p class="text-red-600">{{ $message }}</p>
     @enderror
 
-    <label for="status" class="text-grey-darker font-bold">Status</label>
-    <input id="status" class="title bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" type="text"
-           name="status" value="{{ old('status', $task->status ?? '') }}">
-    @error('status')
-    <p class="text-red-600">{{ $message }}</p>
-    @enderror
-
     <div class="buttons flex mt-5">
         <button>
             <div class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">

@@ -12,6 +12,15 @@ class Task extends Model
     protected $fillable = [
         'title',
         'content',
-        'status'
     ];
+
+    protected $dates = [
+        'completed_at'
+    ];
+
+    public function toggleComplete(): void
+    {
+        $this->completed_at = $this->completed_at ? null : now();
+    }
+
 }

@@ -91,4 +91,21 @@ class TasksControllerTest extends TestCase
         $response = $this->delete(route('tasks.destroy', ['task' => $task]));
         $response->assertStatus(200);
     }
+
+    public function test_mark_task_as_completed(): void
+    {
+        /** @var Authenticatable $user */
+        $user = User::factory()->make();
+        $this->actingAs($user);
+
+        $task = Task::factory()->create();
+
+        $this->followingRedirects();
+        $response = $this->post(route('tasks.complete', $task));
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('tasks', [
+           'id' => $task->id,
+           'completed_at' => now()
+        ]);
+    }
 }

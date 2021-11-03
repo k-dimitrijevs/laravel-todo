@@ -24,7 +24,6 @@ class TasksController extends Controller
         (new Task([
             'title' => $request->get('title'),
             'content' => $request->get('content'),
-            'status' => $request->get('status')
         ]))->save();
 
         return redirect()->route('tasks.index');
@@ -40,7 +39,6 @@ class TasksController extends Controller
         $task->update([
             'title' => $request->get('title'),
             'content' => $request->get('content'),
-            'status' => $request->get('status')
         ]);
 
         return redirect()->route('tasks.index');
@@ -51,5 +49,12 @@ class TasksController extends Controller
         $task->delete();
 
         return redirect()->route('tasks.index');
+    }
+
+    public function complete(Task $task): RedirectResponse
+    {
+        $task->toggleComplete();
+        $task->save();
+        return redirect()->back();
     }
 }
