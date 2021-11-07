@@ -7,15 +7,17 @@ use App\Models\Task;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class TasksController extends Controller
 {
     public function index()
     {
+
         $tasks = Task::where('user_id', auth()->user()->id)
             ->orderBy('completed_at', 'ASC')
             ->orderBy('created_at', 'DESC')
-            ->get();
+            ->paginate(5);
 
         return view('tasks.index', ['tasks' => $tasks]);
     }
@@ -55,7 +57,6 @@ class TasksController extends Controller
     public function destroy(Task $task): RedirectResponse
     {
         $task->delete();
-
         return redirect()->route('tasks.index');
     }
 
@@ -63,6 +64,33 @@ class TasksController extends Controller
     {
         $task->toggleComplete();
         $task->save();
+        return redirect()->back();
+    }
+
+    public function deleted(): View
+    {
+        $tasks = Task::where('user_id', auth()->user()->id)
+            ->onlyTrashed()
+            ->orderBy('completed_at', 'ASC')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(5);
+
+        return view('tasks.deleted', ['tasks' => $tasks]);
+    }
+
+    public function forceDelete(int $id): RedirectResponse
+    {
+        $task = Task::withTrashed()->findOrFail($id);
+        $task->forceDelete();
+
+        return redirect()->back();
+    }
+
+    public function restore(int $id): RedirectResponse
+    {
+        $task = Task::withTrashed()->findOrFail($id);
+        $task->restore();
+
         return redirect()->back();
     }
 }

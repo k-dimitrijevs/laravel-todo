@@ -10,21 +10,30 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                 <div class="buttons flex m-5">
-                    <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-green-600">
-                        <a href="{{ route('tasks.create') }}">Create new task</a>
-                    </div>
+                    <a href="{{ route('tasks.create') }}">
+                        <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-green-600 rounded">
+                            Create new task
+                        </div>
+                    </a>
+
+                    <a href="{{ route('tasks.deleted') }}">
+                        <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-red-500 rounded">
+                            Deleted Tasks
+                        </div>
+                    </a>
                 </div>
 
                 <div class="p-6 bg-white border-b border-gray-200">
                     @foreach($tasks as $task)
-                        <div class="font-sans flex items-center justify-center bg-white-darker w-full py-8">
+                        <div class="font-sans flex items-center justify-center bg-white-darker w-full py-4">
                             <div class="buttons flex">
                                 <form method="post" action="{{ route('tasks.complete', $task) }}">
                                     @csrf
-                                    <div class="btn p-1 px-4 font-semibold cursor-pointer mr-4">
+                                    @method('PATCH')
+                                    <div class="btn p-1 px-4 font-semibold mr-4">
                                         <input type="checkbox"
                                                id="status"
-                                               class="text-green-500 w-6 h-6 rounded-2xl"
+                                               class="text-green-500 w-6 h-6 rounded-2xl cursor-pointer"
                                                name="status"
                                                onchange="this.form.submit()"
                                                @if($task->completed_at) checked @endif>
@@ -49,20 +58,24 @@
                             </div>
 
                             <div class="buttons flex">
-                                <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-yellow-500">
-                                    <a href="{{ route('tasks.edit', $task) }}">Edit</a>
-                                </div>
+                                <a href="{{ route('tasks.edit', $task) }}">
+                                    <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-yellow-500 rounded">
+                                    Edit
+                                    </div>
+                                </a>
                                 <form method="post" action="{{ route('tasks.destroy', $task) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-red-500">
-                                        <button type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
-                                    </div>
+                                    <button type="submit" onclick="return confirm('Are you sure you want to delete?')">
+                                        <div class="btn p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-red-500 rounded">
+                                            Delete
+                                        </div>
+                                    </button>
                                 </form>
                             </div>
                         </div>
                     @endforeach
-
+                    {{ $tasks->links() }}
                 </div>
             </div>
         </div>
